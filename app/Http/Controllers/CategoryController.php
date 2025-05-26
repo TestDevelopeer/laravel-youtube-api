@@ -10,11 +10,11 @@ class CategoryController extends Controller
 {
     public function index(): Collection
     {
-        return Category::all();
+        return Category::with('videos')->get();
     }
 
     public function show(Category $category): Category
     {
-        return $category;
+        return $category->load('videos');
     }
 }
