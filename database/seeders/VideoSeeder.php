@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Video;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class VideoSeeder extends Seeder
 {
@@ -13,15 +12,6 @@ class VideoSeeder extends Seeder
      */
     public function run(): void
     {
-        $videos = [];
-
-        foreach (range(1, 10) as $i) {
-            $videos[] = [
-                'title' => 'Video #' . $i,
-                'channel_id' => $i,
-            ];
-        }
-
-        DB::table('videos')->insert($videos);
+        Video::factory()->count(10)->create();
     }
 }
