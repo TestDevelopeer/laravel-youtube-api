@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Channel;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Random\RandomException;
 
@@ -19,9 +20,22 @@ class VideoFactory extends Factory
      */
     public function definition(): array
     {
+//        $fakeDate = $this->faker->dateTimeThisYear();
+
+        $fakeDate = $this->fakeDate();
+
         return [
-            'title' =>  ucfirst($this->faker->words(random_int(1, 4), true)),
+            'title' => ucfirst($this->faker->words(random_int(1, 4), true)),
             'channel_id' => Channel::inRandomOrder()->first(),
+            'created_at' => $fakeDate,
+            'updated_at' => $fakeDate,
         ];
+    }
+
+    private function fakeDate(): DateTime
+    {
+        $period = $this->faker->randomElement(['year', 'month', 'week', 'day', 'hour']);
+
+        return $this->faker->dateTimeBetween("-1 $period");
     }
 }
