@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Period;
 use App\Models\Video;
 use Illuminate\Support\Collection;
 
@@ -9,16 +10,11 @@ class VideoController extends Controller
 {
     public function index(): Collection
     {
-        $date = match (request('period')) {
-            'year' => now()->startOfYear(),
-            'month' => now()->startOfMonth(),
-            'week' => now()->startOfWeek(),
-            'day' => now()->startOfDay(),
-            'hour' => now()->startOfHour(),
-            default => null,
-        };
+        $period = Period::tryFrom(request('period'));
 
-        return $date ? Video::where('created_at', '>=', $date)->get() : Video::get();
+        return $period
+            ? Video::where('created_at', '>=', $period->date())->get()
+            : Video::get();
     }
 
     public function show(Video $video): Video
