@@ -12,6 +12,6 @@ class ChannelSeeder extends Seeder
      */
     public function run(): void
     {
-        Channel::factory()->count(10)->create();
+        Channel::factory(10)->create();
     }
 }

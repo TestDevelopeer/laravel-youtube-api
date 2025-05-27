@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Channel;
+use App\Models\User;
+use App\Models\Video;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +20,17 @@ class DatabaseSeeder extends Seeder
            ChannelSeeder::class,
            VideoSeeder::class,
            CategorySeeder::class,
-           //CategoryVideoSeeder::class,
+           CategoryVideoSeeder::class,
         ]);
+
+//        User::factory(10)->has(
+//            Channel::factory()->has(
+//                Video::factory(10)->has(
+//                    Category::factory(10)
+//                )
+//            )
+//        )->create();
+
+//        Video::factory(5)->hasCategories(3)->create();
     }
 }
