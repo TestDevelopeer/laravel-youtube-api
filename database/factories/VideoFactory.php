@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\Period;
 use App\Models\Channel;
+use App\Models\Video;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Random\RandomException;
@@ -38,5 +40,10 @@ class VideoFactory extends Factory
         $period = $this->faker->randomElement(['year', 'month', 'week', 'day', 'hour']);
 
         return $this->faker->dateTimeBetween("-1 $period");
+    }
+
+    public function last(Period $period): Video
+    {
+        
     }
 }
