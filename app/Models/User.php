@@ -34,6 +34,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function channel(): HasOne
+    {
+        return $this->hasOne(Channel::class);
+    }
+
+    public function scopeSearch($query, ?string $text)
+    {
+        return $query->where(function ($query) use ($text) {
+            $query->where('name', 'like', "%$text%")
+                ->orWhere('email', 'like', "%$text%");
+        });
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -45,10 +58,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function channel(): HasOne
-    {
-        return $this->hasOne(Channel::class);
     }
 }
