@@ -22,7 +22,7 @@ class VideoFactory extends Factory
     {
         return [
             'title' => ucfirst($this->faker->words(random_int(1, 4), true)),
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->paragraph(random_int(1, 3)),
             'channel_id' => Channel::inRandomOrder()->first(),
         ];
     }
