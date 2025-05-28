@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Channel;
-use App\Models\User;
-use App\Models\Video;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,11 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-           UserSeeder::class,
-           ChannelSeeder::class,
-           VideoSeeder::class,
-           CategorySeeder::class,
-           CategoryVideoSeeder::class,
+            UserSeeder::class,
+            ChannelSeeder::class,
+            VideoSeeder::class,
+            CategorySeeder::class,
+            CategoryVideoSeeder::class,
+            PlaylistSeeder::class,
         ]);
 
 //        User::factory(10)->has(
