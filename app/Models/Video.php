@@ -4,13 +4,14 @@ namespace App\Models;
 
 use App\Enums\Period;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Video extends Model
+class Video extends RelationshipsModel
 {
     use HasFactory;
+
+    protected static array $relationships = ['channel', 'categories', 'playlists'];
 
     public function channel(): BelongsTo
     {
@@ -20,6 +21,11 @@ class Video extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function playlists(): BelongsToMany
+    {
+        return $this->belongsToMany(Playlist::class);
     }
 
     public function scopeFromPeriod($query, ?Period $period)
@@ -35,10 +41,5 @@ class Video extends Model
             $query->where('title', 'like', "%$text%")
                 ->orWhere('description', 'like', "%$text%");
         });
-    }
-
-    public function playlists(): BelongsToMany
-    {
-        return $this->belongsToMany(Playlist::class);
     }
 }

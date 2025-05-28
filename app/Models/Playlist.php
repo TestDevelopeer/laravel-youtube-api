@@ -3,19 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Playlist extends Model
+class Playlist extends RelationshipsModel
 {
-    /** @use HasFactory<\Database\Factories\PlaylistFactory> */
     use HasFactory;
 
-    public function scopeSearch($query, ?string $name)
-    {
-        return $query->where('name', 'like', "%$name%");
-    }
+    protected static array $relationships = ['videos', 'channel'];
 
     public function channel(): BelongsTo
     {
@@ -25,5 +20,10 @@ class Playlist extends Model
     public function videos(): BelongsToMany
     {
         return $this->belongsToMany(Video::class);
+    }
+
+    public function scopeSearch($query, ?string $name)
+    {
+        return $query->where('name', 'like', "%$name%");
     }
 }

@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index(): Collection
     {
-        return Category::with(request('with', []))
+        return Category::withRelationships(request('with', []))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
             ->simplePaginate(request('limit'))
