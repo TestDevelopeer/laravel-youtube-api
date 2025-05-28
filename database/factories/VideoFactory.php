@@ -21,8 +21,8 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => ucfirst($this->faker->words(random_int(1, 4), true)),
-            'description' => $this->faker->paragraph(random_int(1, 3)),
+            'title' => ucfirst(fake()->words(random_int(1, 4), true)),
+            'description' => fake()->paragraph(random_int(1, 3)),
             'channel_id' => Channel::inRandomOrder()->first(),
         ];
     }
@@ -30,7 +30,7 @@ class VideoFactory extends Factory
     public function last(Period $period): VideoFactory|Factory
     {
         return $this->state(function () use ($period) {
-            $fakeDate = $this->faker->dateTimeBetween("-1 $period->value");
+            $fakeDate = fake()->dateTimeBetween("-1 $period->value");
 
             return [
                 'created_at' => $fakeDate,
