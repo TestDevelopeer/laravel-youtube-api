@@ -25,4 +25,9 @@ class Channel extends Model
     {
         return $query->where('name', 'like', "%$name%");
     }
+
+    public function playlists(): HasMany
+    {
+        return $this->hasMany(Playlist::class);
+    }
 }

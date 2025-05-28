@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             CategoryVideoSeeder::class,
             PlaylistSeeder::class,
+            PlaylistVideoSeeder::class,
         ]);
 
 //        User::factory(10)->has(

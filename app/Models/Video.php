@@ -36,4 +36,9 @@ class Video extends Model
                 ->orWhere('description', 'like', "%$text%");
         });
     }
+
+    public function playlists(): BelongsToMany
+    {
+        return $this->belongsToMany(Playlist::class);
+    }
 }
