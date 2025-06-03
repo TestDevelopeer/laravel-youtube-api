@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChannelController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
@@ -22,3 +23,6 @@ Route::get('/users/{user}', [UserController::class, 'show']);
 
 Route::get('/playlists', [PlaylistController::class, 'index']);
 Route::get('/playlists/{playlist}', [PlaylistController::class, 'show']);
+
+Route::get('/comments', [CommentController::class, 'index']);
+Route::get('/comments/{comment}', [CommentController::class, 'show']);
