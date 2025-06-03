@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,6 +13,27 @@ use Random\RandomException;
  */
 class CommentFactory extends Factory
 {
+    public function configure(): Factory|CommentFactory
+    {
+        return $this->afterCreating(function (Comment $comment) {
+            if ($comment->replies()->exists()) {
+                return;
+            }
+
+            $comment->parent()->associate($this->findRandomCommentToMakeParentOf($comment))->save();
+        });
+    }
+
+    private function findRandomCommentToMakeParentOf(Comment $comment): Comment
+    {
+        return $comment->video
+            ->comments()
+            ->doesntHave('parent')
+            ->where('id', '<>', $comment->id)
+            ->inRandomOrder()
+            ->first();
+    }
+
     /**
      * Define the model's default state.
      *

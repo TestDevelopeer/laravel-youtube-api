@@ -12,15 +12,6 @@ class Comment extends Model
     /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
 
-    public function associateParentComment(): void
-    {
-        if ($this->replies()->exists()) {
-            return;
-        }
-
-        $this->parent()->associate($this->findRandomToMakeParent())->save();
-    }
-
     public function replies(): HasMany
     {
         return $this->hasMany(static::class, 'parent_id');
@@ -29,16 +20,6 @@ class Comment extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(static::class);
-    }
-
-    private function findRandomToMakeParent()
-    {
-        return $this->video
-            ->comments()
-            ->doesntHave('parent')
-            ->where('id', '<>', $this->id)
-            ->inRandomOrder()
-            ->first();
     }
 
     public function user(): BelongsTo
