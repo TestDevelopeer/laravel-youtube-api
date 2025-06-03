@@ -24,11 +24,6 @@ class Video extends RelationshipsModel
         return $this->belongsToMany(Category::class);
     }
 
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function playlists(): BelongsToMany
     {
         return $this->belongsToMany(Playlist::class);
@@ -48,4 +43,16 @@ class Video extends RelationshipsModel
                 ->orWhere('description', 'like', "%$text%");
         });
     }
+
+    public function createRandomComments()
+    {
+        return Comment::factory(10)->create(['video_id' => $this->id]);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+
 }
