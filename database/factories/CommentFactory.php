@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Random\RandomException;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Comment>
+ * @extends Factory<Comment>
  */
 class CommentFactory extends Factory
 {
@@ -43,7 +43,7 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'text' => fake()->sentence(random_int(1, 5), true),
+            'text' => fake()->sentence(random_int(1, 5)),
             'user_id' => User::inRandomOrder()->first(),
             'video_id' => Video::inRandomOrder()->first(),
         ];
