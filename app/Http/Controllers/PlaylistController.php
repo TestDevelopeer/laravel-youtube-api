@@ -9,7 +9,7 @@ class PlaylistController extends Controller
 {
     public function index(): Paginator
     {
-        return Playlist::withRelationships(request('with', []))
+        return Playlist::withRelationships(request('with'))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
             ->simplePaginate(request('limit'))
@@ -18,6 +18,6 @@ class PlaylistController extends Controller
 
     public function show(Playlist $playlist): Playlist
     {
-        return $playlist->load(request('with', []));
+        return $playlist->loadRelationships(request('with'));
     }
 }

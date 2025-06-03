@@ -9,7 +9,7 @@ class ChannelController extends Controller
 {
     public function index(): Paginator
     {
-        return Channel::withRelationships(request('with', []))
+        return Channel::withRelationships(request('with'))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
             ->simplePaginate(request('limit'))
@@ -18,6 +18,6 @@ class ChannelController extends Controller
 
     public function show(Channel $channel): Channel
     {
-        return $channel->load(request('with', []));
+        return $channel->loadRelationships(request('with'));
     }
 }

@@ -4,30 +4,38 @@ namespace App\Traits;
 
 trait WithRelationships
 {
-    public function scopeWithRelationships($query, array|string $relationshipsRequest)
+    public function scopeWithRelationships($query, $relationshipsRequest)
     {
-        $validRelationships = collect($relationshipsRequest)
+        return $query->with($this->validRelationships($relationshipsRequest));
+    }
+
+    public function validRelationships($relationships)
+    {
+        return collect($relationships)
             ->map(fn(string $relationship): array => explode('.', $relationship))
             ->filter(fn(array $relationships): bool => (new static)->hasRelationships($relationships))
             ->map(fn(array $relationships): string => implode('.', $relationships))
             ->all();
-
-        return $query->with($validRelationships);
     }
 
-    public function hasRelationships(array $relationships): bool
+    public function hasRelationships($relationships): bool
     {
         return (bool)collect($relationships)
             ->reduce(fn($model, $relationship) => optional($model)->hasOneRelationship($relationship), $this);
     }
 
-    public function hasOneRelationship(string $relationship)
+    public function hasOneRelationship($relationship)
     {
         return $this->isValidRelationShip($relationship) ? $this->$relationship()->getRelated() : null;
     }
 
-    public function isValidRelationShip(string $relationship): bool
+    public function isValidRelationShip($relationship): bool
     {
         return method_exists($this, $relationship) && in_array($relationship, static::$relationships, true);
+    }
+
+    public function loadRelationships($relationshipsRequest)
+    {
+        return $this->load($this->validRelationships($relationshipsRequest));
     }
 }

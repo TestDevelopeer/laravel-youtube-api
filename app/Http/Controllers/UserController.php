@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index(): Paginator
     {
-        return User::withRelationships(request('with', []))
+        return User::withRelationships(request('with'))
             ->search(request('query'))
             ->orderBy(request('sort', 'name'), request('order', 'asc'))
             ->simplePaginate(request('limit'))
@@ -18,6 +18,6 @@ class UserController extends Controller
 
     public function show(User $user): User
     {
-        return $user->load(request('with', []));
+        return $user->loadRelationships(request('with'));
     }
 }
